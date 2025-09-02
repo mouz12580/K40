@@ -473,6 +473,7 @@ static int tzdbg_request_encrypted_log(dma_addr_t buf_paddr,
  * Debugfs data structure and functions
  */
 
+#ifdef CONFIG_DEBUG_FS
 static int _disp_tz_general_stats(void)
 {
 	int len = 0;
@@ -1259,6 +1260,7 @@ static const struct file_operations tzdbg_fops = {
 	.open    = simple_open,
 };
 
+#endif
 
 /*
  * Allocates log buffer from ION, registers the buffer at TZ
@@ -1413,6 +1415,7 @@ static void tzdbg_free_encrypted_log_buf(struct platform_device *pdev)
 static int  tzdbgfs_init(struct platform_device *pdev)
 {
 	int rc = 0;
+#ifdef CONFIG_DEBUG_FS
 	int i;
 	struct dentry           *dent_dir;
 	struct dentry           *dent;
@@ -1440,14 +1443,17 @@ static int  tzdbgfs_init(struct platform_device *pdev)
 err:
 	debugfs_remove_recursive(dent_dir);
 
+#endif
 	return rc;
 }
 
 static void tzdbgfs_exit(struct platform_device *pdev)
 {
+#ifdef CONFIG_DEBUG_FS
 	struct dentry *dent_dir;
 	dent_dir = platform_get_drvdata(pdev);
 	debugfs_remove_recursive(dent_dir);
+#endif
 }
 
 static int __update_hypdbg_base(struct platform_device *pdev,
