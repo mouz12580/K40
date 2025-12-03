@@ -12,7 +12,7 @@ jobs:
       with:
         github-server-url: 'https://github.com'
         repository: mouz12580/K40
-        ref: base
+        ref: time
         path: android-kernel
 
     - name: Setup Build Environment
